@@ -1,0 +1,265 @@
+/* ===== СБРОС И ГЛОБАЛЬНЫЕ СТИЛИ ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2c3e50 0%, #8e44ad 100%);
+  font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+  color: #fff;
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Декоративный фон с частицами */
+body::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.07) 0%, transparent 20%),
+    radial-gradient(circle at 80% 90%, rgba(255,255,255,0.05) 0%, transparent 25%),
+    radial-gradient(circle at 50% 10%, rgba(142, 68, 173, 0.15) 0%, transparent 30%);
+  z-index: -1;
+  animation: rotate 40s infinite linear;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ===== КОНТЕЙНЕР ===== */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ===== ЗАГОЛОВОК ===== */
+h1 {
+  text-align: center;
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  letter-spacing: -0.5px;
+}
+
+/* ===== СТИЛЬ "СТЕКЛО" (GLASSMORPHISM) ===== */
+.glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  padding: 24px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+/* ===== ФОРМЫ ===== */
+.book-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: end;
+}
+
+.book-form input {
+  flex: 1;
+  min-width: 140px;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.book-form input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.book-form input:focus {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(100, 180, 255, 0.6);
+}
+
+/* ===== КНОПКИ ===== */
+.btn {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.btn-add {
+  background: rgba(46, 204, 113, 0.8);
+  color: white;
+}
+
+.btn-add:hover {
+  background: rgba(46, 204, 113, 1);
+  transform: scale(1.03);
+}
+
+.btn-update {
+  background: rgba(52, 152, 219, 0.8);
+  color: white;
+}
+
+.btn-update:hover {
+  background: rgba(52, 152, 219, 1);
+  transform: scale(1.03);
+}
+
+/* ===== СПИСОК КНИГ ===== */
+.books-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.books-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+/* Скроллбар */
+.books-list::-webkit-scrollbar {
+  width: 8px;
+}
+.books-list::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+}
+.books-list::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.15);
+  border-radius: 4px;
+}
+.books-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+.book-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  transition: background 0.25s;
+}
+
+.book-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.book-item span {
+  font-size: 1.05rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.book-item strong {
+  color: #3498db;
+}
+
+.book-item em {
+  color: #FFFFFF;
+  font-style: normal;
+}
+
+/* ===== КНОПКА УДАЛЕНИЯ ===== */
+.delete-form {
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+}
+
+.btn-delete {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  font-size: 1.6rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+
+.btn-delete:hover {
+  color: white;
+  background: rgba(231, 76, 60, 0.8);
+  transform: scale(1.15) rotate(90deg);
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
+@media (max-width: 768px) {
+  .container {
+    gap: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .book-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .book-form input,
+  .btn {
+    width: 100%;
+  }
+
+  .book-item {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .delete-form {
+    margin-left: 0;
+    margin-top: 8px;
+    align-self: flex-start;
+  }
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мини-песочница - MVC на Flask</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="background-animation"></div>
+
+    <main class="container">
+        <header class="hero-header">
+            <div class="header-content">
+                <h1 class="main-title">
+                    <span class="title-accent">Мини-песочница</span> №1
+                </h1>
+                <p class="subtitle">Архитектура MVC в Flask Framework</p>
+                <div class="decoration-line"></div>
+            </div>
+        </header>
+
+        <section class="content-section">
+            <div class="section-header">
+                <h2>О проекте</h2>
+            </div>
+            <div class="description-card">
+                <p class="lead-text">Это элегантное приложение на Flask демонстрирует чистую архитектуру Model-View-Controller:</p>
+
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🗃</div>
+                        <div class="feature-content">
+                            <h3>Model</h3>
+                            <p>Доменные классы и репозиторий (app/models)</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">🎮</div>
+                        <div class="feature-content">
+                            <h3>Controller</h3>
+                            <p>Thin-контроллеры (app/controllers)</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">👁</div>
+                        <div class="feature-content">
+                            <h3>View</h3>
+                            <p>Jinja2 шаблоны (app/views)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="additional-info">В примере реализована простая работа с книгами и заглушенная аутентификация для демонстрации редиректов.</p>
+            </div>
+        </section>
+
+        <nav class="actions-panel">
+            {% if session.get('logged_in') %}
+            <div class="user-info">
+                <span class="user-greeting">Выполнен вход как:</span>
+                <span class="username">{{ session.user }}</span>
+            </div>
+            <a class="btn btn-secondary" href="{{ url_for('auth.logout') }}">
+                <span class="btn-icon">🚪</span>
+                Выйти
+            </a>
+            {% else %}
+            <a class="btn btn-primary" href="{{ url_for('auth.login') }}">
+                <span class="btn-icon">🔑</span>
+                Войти в систему
+            </a>
+            {% endif %}
+        </nav>
+    </main>
+</body>
+</html>
