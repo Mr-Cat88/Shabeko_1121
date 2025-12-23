@@ -8,35 +8,37 @@ from app.model.user import User, UserRepo
 app = Flask(__name__, template_folder="app/view", static_folder="app/static")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost:3306/flaskweb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 app.secret_key = "key1220__Botik__"
-
 db.init_app(app)
-
-#with app.app_context():
- #   db.create_all()
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'auth.login'
 
+
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    # Старый способ (устаревший):
+    # return User.query.get(int(user_id))
+
+    # Новый способ (рекомендуемый):
+    with app.app_context():
+        return db.session.get(User, int(user_id))
+
 
 app.register_blueprint(books_bp)
 app.register_blueprint(auth_bp)
-
-
 
 with app.app_context():
     repo = UserRepo()
     if not repo.get_by_username('admin'):
         repo.add('admin', 'password123')
 
+
 @app.get("/")
 def index():
     return render_template("index.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

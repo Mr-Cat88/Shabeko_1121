@@ -1,28 +1,24 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+# app/controller/auth_controller.py
+from flask import Blueprint, render_template, request, redirect, url_for, session
 from flask_login import login_user, logout_user, login_required, current_user
 from app.model.user import UserRepo, User
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
-
 repo = UserRepo()
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return render_template("index.html")
-
+        return redirect(url_for('books.list_books'))
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
         user = repo.get_by_username(username)
         if user and user.check_password(password):
             login_user(user)
-            flash("Login successful!", "success")
             session['logged_in'] = True
             session['user'] = user.username
-            return render_template("index.html")
-        else:
-            flash("Invalid username or password", "error")
+            return redirect(url_for('books.list_books'))
     return render_template("auth/login.html")
 
 @bp.route("/logout")
@@ -31,8 +27,7 @@ def logout():
     logout_user()
     session.pop('logged_in', None)
     session.pop('user', None)
-    flash("You have been logged out.", "info")
-    return render_template("index.html")
+    return redirect(url_for('index'))
 
 @bp.route("/register", methods=["GET", "POST"])
 def register():
@@ -40,9 +35,8 @@ def register():
         username = request.form.get("username")
         password = request.form.get("password")
         if repo.get_by_username(username):
-            flash("Username already exists", "error")
+            return render_template("auth/register.html", error="Username already exists")
         else:
             repo.add(username, password)
-            flash("Registration successful! Please login.", "success")
             return redirect(url_for("auth.login"))
     return render_template("auth/register.html")

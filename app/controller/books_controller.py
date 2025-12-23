@@ -1,17 +1,16 @@
-from flask import Blueprint, request,render_template,redirect ,url_for
+# app/controller/books_controller.py
+from flask import Blueprint, request, render_template, redirect, url_for
 from flask_login import login_required
-
 from app.model.book import BookRepo
 
 bp = Blueprint("books", __name__, url_prefix="/books")
-
 repo = BookRepo()
 
 @bp.get("/")
 @login_required
 def list_books():
     books = repo.all()
-    return render_template("books/list.html", books=books) # отдаём View
+    return render_template("books/list.html", books=books)
 
 @bp.post("/")
 def create_book():
@@ -19,7 +18,6 @@ def create_book():
     author = request.form.get("author")
     repo.add(title, author)
     return redirect(url_for("books.list_books"))
-
 
 @bp.post("/delete/<int:book_id>")
 def delete_book(book_id):

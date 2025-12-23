@@ -8,7 +8,6 @@
 </head>
 <body>
     <div class="background-animation"></div>
-
     <main class="container">
         <header class="hero-header">
             <div class="header-content">
@@ -26,43 +25,110 @@
             </div>
             <div class="description-card">
                 <p class="lead-text">Это элегантное приложение на Flask демонстрирует чистую архитектуру Model-View-Controller:</p>
-
                 <div class="features-grid">
                     <div class="feature-item">
-                        <div class="feature-icon">🗃</div>
+                        <div class="feature-icon">🗃️</div>
                         <div class="feature-content">
                             <h3>Model</h3>
                             <p>Доменные классы и репозиторий (app/models)</p>
                         </div>
                     </div>
-
                     <div class="feature-item">
                         <div class="feature-icon">🎮</div>
                         <div class="feature-content">
                             <h3>Controller</h3>
-                            <p>Thin-контроллеры (app/controllers)</p>
+                            <p>Thin-контроллеры с бизнес-логикой (app/controllers)</p>
                         </div>
                     </div>
-
                     <div class="feature-item">
-                        <div class="feature-icon">👁</div>
+                        <div class="feature-icon">👁️</div>
                         <div class="feature-content">
                             <h3>View</h3>
-                            <p>Jinja2 шаблоны (app/views)</p>
+                            <p>Jinja2 шаблоны с современным дизайном (app/views)</p>
                         </div>
                     </div>
                 </div>
+                <p class="additional-info">В примере реализована работа с книгами и система аутентификации пользователей с использованием Flask-Login.</p>
+            </div>
+        </section>
 
-                <p class="additional-info">В примере реализована простая работа с книгами и заглушенная аутентификация для демонстрации редиректов.</p>
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🌟 Особенности реализации</h2>
+            </div>
+            <div class="description-card">
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🔐</div>
+                        <div class="feature-content">
+                            <h3>Безопасная аутентификация</h3>
+                            <p>Использование Flask-Login для управления сессиями пользователей с хешированием паролей через Werkzeug</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-content">
+                            <h3>Работа с данными</h3>
+                            <p>SQLAlchemy ORM для взаимодействия с MySQL базой данных с использованием репозиторного паттерна</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🧪</div>
+                        <div class="feature-content">
+                            <h3>Тестирование</h3>
+                            <p>pytest для unit-тестирования основных функций приложения</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🚀 Технологический стек</h2>
+            </div>
+            <div class="description-card">
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <h4>Backend</h4>
+                        <ul>
+                            <li>Python 3.13</li>
+                            <li>Flask Framework</li>
+                            <li>Flask-Login</li>
+                            <li>SQLAlchemy ORM</li>
+                        </ul>
+                    </div>
+                    <div class="tech-item">
+                        <h4>Frontend</h4>
+                        <ul>
+                            <li>HTML5 + CSS3</li>
+                            <li>Jinja2 шаблонизатор</li>
+                            <li>Адаптивная верстка</li>
+                            <li>CSS анимации</li>
+                        </ul>
+                    </div>
+                    <div class="tech-item">
+                        <h4>База данных</h4>
+                        <ul>
+                            <li>MySQL</li>
+                            <li>PyMySQL драйвер</li>
+                            <li>Миграции (в разработке)</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
 
         <nav class="actions-panel">
-            {% if session.get('logged_in') %}
+            {% if current_user.is_authenticated %}
             <div class="user-info">
-                <span class="user-greeting">Выполнен вход как:</span>
-                <span class="username">{{ session.user }}</span>
+                <span class="user-greeting">Здравствуйте,</span>
+                <span class="username">{{ current_user.username }}</span>
             </div>
+            <a class="btn btn-primary" href="{{ url_for('books.list_books') }}">
+                <span class="btn-icon">📚</span>
+                Мои книги
+            </a>
             <a class="btn btn-secondary" href="{{ url_for('auth.logout') }}">
                 <span class="btn-icon">🚪</span>
                 Выйти
@@ -71,6 +137,10 @@
             <a class="btn btn-primary" href="{{ url_for('auth.login') }}">
                 <span class="btn-icon">🔑</span>
                 Войти в систему
+            </a>
+            <a class="btn btn-secondary" href="{{ url_for('auth.register') }}">
+                <span class="btn-icon">📝</span>
+                Регистрация
             </a>
             {% endif %}
         </nav>
